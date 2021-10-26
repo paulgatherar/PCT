@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+  selector: 'app-people',
+  templateUrl: './people.component.html'
 })
-export class FetchDataComponent implements OnInit {
+export class PeopleComponent implements OnInit {
   public people: Person[];
   public sortByAge: boolean = false;
   public reverseNames: boolean = false;
