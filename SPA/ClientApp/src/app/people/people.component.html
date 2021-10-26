@@ -19,6 +19,20 @@
   </tbody>
 </table>
 
-<button class="btn btn-primary" (click)="onSortByAgeClick()">Sort by age</button>
-<button class="btn btn-primary" (click)="onReverseNamesClick()">Reverse names</button>
-<a class="btn btn-primary" href="api/people/download?sortByAge={{sortByAge}}&reverseNames={{reverseNames}}" download="FEFle123.csv">Download CSV</a>
+<div class="form-group">
+  <div class="custom-control custom-switch custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="sortByAgeCheck" [checked]="sortByAge" (change)="onSortByAgeChange()">
+    <label class="custom-control-label" for="sortByAgeCheck">Sort by age</label>
+  </div>
+  <div class="custom-control custom-switch custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="reverseNamesCheck" [checked]="reverseNames" (change)="onReverseNamesChange()">
+    <label class="custom-control-label" for="reverseNamesCheck">Reverse names</label>
+  </div>
+  <div class="custom-control custom-switch custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="selectByAgeCheck" [checked]="selectByAge" (change)="onSelectByAgeChange()">
+    <label class="custom-control-label" for="selectByAgeCheck">Select by age</label>
+  </div>
+</div>
+<div class="form-group">
+  <a class="btn btn-primary" href="api/people/download?sortByAge={{sortByAge}}&reverseNames={{reverseNames}}&selectByAge={{selectByAge}}" download="FEFle123.csv">Download CSV</a>
+</div>

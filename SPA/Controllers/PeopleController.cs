@@ -26,7 +26,7 @@ namespace SPA.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Person>> Get([FromQuery] bool sortByAge, [FromQuery] bool reverseNames)
+        public async Task<IEnumerable<Person>> Get([FromQuery] bool sortByAge, [FromQuery] bool reverseNames, [FromQuery] bool selectByAge)
         {
             var httpClient = this.httpClientFactory.CreateClient();
 
@@ -55,13 +55,18 @@ namespace SPA.Controllers
                 });
             }
 
+            if (selectByAge)
+            {
+                people = people.Where(p => p.Age > 10);
+            }
+
             return people;
         }
 
         [HttpGet("download")]
-        public async Task<ActionResult> Download([FromQuery] bool sortByAge, [FromQuery] bool reverseNames)
+        public async Task<ActionResult> Download([FromQuery] bool sortByAge, [FromQuery] bool reverseNames, [FromQuery] bool selectByAge)
         {
-            var people = await this.Get(sortByAge, reverseNames);
+            var people = await this.Get(sortByAge, reverseNames, selectByAge);
 
             var sb = new StringBuilder();
 
