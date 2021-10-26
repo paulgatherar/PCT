@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FetchDataComponent implements OnInit {
   public people: Person[];
-  private sortByAge: boolean = false;
-  private reverseNames: boolean = false;
+  public sortByAge: boolean = false;
+  public reverseNames: boolean = false;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
   }

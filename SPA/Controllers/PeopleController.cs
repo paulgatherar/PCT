@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -55,6 +56,23 @@ namespace SPA.Controllers
             }
 
             return people;
+        }
+
+        [HttpGet("download")]
+        public async Task<ActionResult> Download([FromQuery] bool sortByAge, [FromQuery] bool reverseNames)
+        {
+            var people = await this.Get(sortByAge, reverseNames);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine("ID,Name,Age");
+
+            foreach (var person in people)
+            {
+                sb.AppendLine($"{person.Id},{person.Name},{person.Age}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "FEFle123.csv");
         }
     }
 }
