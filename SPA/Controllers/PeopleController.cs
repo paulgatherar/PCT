@@ -23,7 +23,7 @@ namespace SPA.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Person>> Get()
+        public async Task<IEnumerable<Person>> Get([FromQuery] bool sortByAge)
         {
             var httpClient = this.httpClientFactory.CreateClient();
 
@@ -34,7 +34,14 @@ namespace SPA.Controllers
 
             var content = await httpResponseMessage.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<Person>>(content);
+            var people = JsonConvert.DeserializeObject<IEnumerable<Person>>(content);
+
+            if (sortByAge)
+            {
+                people = people.OrderBy(p => p.Age);
+            }
+
+            return people;
         }
     }
 }
