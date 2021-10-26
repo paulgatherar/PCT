@@ -16,14 +16,16 @@ namespace SPA.Controllers
         const string url = "https://techtestpersonapi.azurewebsites.net/api/GETPersonsTechTestAPI?code=Z5Dm297Ijn9weSo75EVtsJHN9HoVE0fgJt8zIGXWV4ZOOCGNpaYBtw==";
 
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly INameReverseService nameReverseService;
 
-        public PeopleController(IHttpClientFactory httpClientFactory)
+        public PeopleController(IHttpClientFactory httpClientFactory, INameReverseService nameReverseService)
         {
             this.httpClientFactory = httpClientFactory;
+            this.nameReverseService = nameReverseService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Person>> Get([FromQuery] bool sortByAge)
+        public async Task<IEnumerable<Person>> Get([FromQuery] bool sortByAge, [FromQuery] bool reverseNames)
         {
             var httpClient = this.httpClientFactory.CreateClient();
 
@@ -39,6 +41,17 @@ namespace SPA.Controllers
             if (sortByAge)
             {
                 people = people.OrderBy(p => p.Age);
+            }
+
+            if (reverseNames)
+            {
+                people = people.Select(p =>
+                new Person
+                {
+                    Id = p.Id,
+                    Name = this.nameReverseService.Reverse(p.Name),
+                    Age = p.Age
+                });
             }
 
             return people;

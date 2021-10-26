@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class FetchDataComponent implements OnInit {
   public people: Person[];
   private sortByAge: boolean = false;
+  private reverseNames: boolean = false;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
   }
@@ -21,8 +22,13 @@ export class FetchDataComponent implements OnInit {
     this.getPeople();
   }
 
+  onReverseNamesClick() {
+    this.reverseNames = !this.reverseNames;
+    this.getPeople();
+  }
+
   getPeople() {
-    this.http.get<Person[]>(this.baseUrl + `api/people?sortByAge=${this.sortByAge}`).subscribe(result => {
+    this.http.get<Person[]>(this.baseUrl + `api/people?sortByAge=${this.sortByAge}&reverseNames=${this.reverseNames}`).subscribe(result => {
       this.people = result;
     }, error => console.error(error));
   }

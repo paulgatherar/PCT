@@ -30,6 +30,8 @@ namespace SPA
             services.AddSwaggerGen();
 
             services.AddHttpClient();
+
+            services.AddSingleton<INameReverseService, NameReverseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
