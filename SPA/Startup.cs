@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace SPA
 {
@@ -27,6 +26,8 @@ namespace SPA
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSwaggerGen();
 
             services.AddHttpClient();
         }
@@ -51,6 +52,9 @@ namespace SPA
             {
                 app.UseSpaStaticFiles();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseRouting();
 
